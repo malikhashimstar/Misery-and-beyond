@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misery & Beyond — Hashim Malik</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Sorts+Mill+Goudy:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --aged: #e8dfc8;
+    --gold: #b8860b;
+    --rust: #8b3a1e;
+    --shadow: rgba(26,18,8,0.15);
+    --muted: #6b5c40;
+    --accent: #c9a84c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 2rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #3a2a10 0%, transparent 70%);
+  }
+
+  .hero-ornament {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image:
+      radial-gradient(circle at 20% 20%, #c9a84c 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, #c9a84c 1px, transparent 1px),
+      radial-gradient(circle at 60% 30%, #c9a84c 1px, transparent 1px),
+      radial-gradient(circle at 30% 70%, #c9a84c 1px, transparent 1px);
+    background-size: 120px 120px, 140px 140px, 80px 80px, 100px 100px;
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    animation: fadeUp 1.4s ease both;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 400;
+    color: var(--parchment);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title span {
+    color: var(--accent);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1em;
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-style: italic;
+    color: #a09070;
+    margin-top: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    margin: 2.5rem auto;
+  }
+
+  .hero-author {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #6b5c40;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    animation: pulse 2.5s ease infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    margin: 0.8rem auto 0;
+  }
+
+  /* ── CONTENT AREA ── */
+  .content {
+    background: var(--parchment);
+    position: relative;
+  }
+
+  .content::before {
+    content: '';
+    display: block;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--ink), var(--parchment));
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 3rem 0 0;
+    opacity: 0.7;
+  }
+
+  /* ── WRITING CARDS ── */
+  .writings-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 2rem 6rem;
+  }
+
+  .writing-card {
+    background: #fff;
+    border: 1px solid rgba(26,18,8,0.08);
+    border-left: 3px solid var(--accent);
+    padding: 3rem 3.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    box-shadow: 0 2px 20px var(--shadow), 0 0 0 0 transparent;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .writing-card:hover {
+    box-shadow: 0 8px 40px rgba(26,18,8,0.15), 0 2px 8px rgba(26,18,8,0.08);
+    transform: translateY(-2px);
+  }
+
+  .writing-card.prose {
+    background: var(--aged);
+    border-left-color: var(--rust);
+  }
+
+  .writing-card.quote {
+    background: var(--ink);
+    border: none;
+    padding: 3.5rem 4rem;
+    text-align: center;
+  }
+
+  .writing-card.urdu {
+    background: #1e1a14;
+    border-left-color: var(--gold);
+    text-align: center;
+  }
+
+  .writing-card.verse {
+    border-left-color: #6b5c40;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent), transparent);
+    opacity: 0.4;
+  }
+
+  .writing-card.quote .card-title,
+  .writing-card.urdu .card-title {
+    color: var(--accent);
+    justify-content: center;
+  }
+
+  .writing-card.quote .card-title::after {
+    display: none;
+  }
+
+  /* Poem text */
+  .poem-body {
+    font-family: 'Sorts Mill Goudy', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 2;
+    color: var(--ink);
+  }
+
+  .poem-body .stanza {
+    margin-bottom: 1.5rem;
+  }
+
+  .poem-body .line {
+    display: block;
+  }
+
+  /* Prose text */
+  .prose-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #2a1f10;
+    font-style: italic;
+  }
+
+  /* Quote text */
+  .quote-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--parchment);
+  }
+
+  .quote-body strong {
+    color: var(--accent);
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+  }
+
+  /* Urdu/Hindi text */
+  .urdu-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 2.2;
+    color: #d4b880;
+  }
+
+  .urdu-body .line {
+    display: block;
+  }
+
+  /* Numbered poem */
+  .number-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: rgba(184,134,11,0.15);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  /* Page reference */
+  .page-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+    opacity: 0.7;
+  }
+
+  /* Attribution in cards */
+  .card-attribution {
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(26,18,8,0.1);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: right;
+  }
+
+  .writing-card.quote .card-attribution {
+    border-top-color: rgba(249,240,228,0.1);
+    color: #8a7a5a;
+  }
+
+  .writing-card.urdu .card-attribution {
+    border-top-color: rgba(212,184,128,0.15);
+    color: #8a7a5a;
+  }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    background: var(--ink);
+    text-align: center;
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .colophon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, #3a2a10, transparent 70%);
+  }
+
+  .colophon-content {
+    position: relative;
+  }
+
+  .colophon-ornament {
+    font-size: 2rem;
+    color: var(--accent);
+    opacity: 0.4;
+    letter-spacing: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .colophon-name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    color: var(--accent);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+  }
+
+  .colophon-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: #6b5c40;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .colophon-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 2rem auto;
+    opacity: 0.4;
+  }
+
+  .colophon-rights {
+    font-family: 'Cormorant Garamond', serif;
+    color: #3a2f1e;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Staggered card animations */
+  .writing-card:nth-child(1)  { animation-delay: 0.05s; }
+  .writing-card:nth-child(2)  { animation-delay: 0.1s; }
+  .writing-card:nth-child(3)  { animation-delay: 0.15s; }
+  .writing-card:nth-child(4)  { animation-delay: 0.2s; }
+  .writing-card:nth-child(5)  { animation-delay: 0.25s; }
+  .writing-card:nth-child(6)  { animation-delay: 0.3s; }
+  .writing-card:nth-child(7)  { animation-delay: 0.35s; }
+  .writing-card:nth-child(8)  { animation-delay: 0.4s; }
+  .writing-card:nth-child(9)  { animation-delay: 0.45s; }
+  .writing-card:nth-child(10) { animation-delay: 0.5s; }
+  .writing-card:nth-child(11) { animation-delay: 0.55s; }
+  .writing-card:nth-child(12) { animation-delay: 0.6s; }
+  .writing-card:nth-child(13) { animation-delay: 0.65s; }
+  .writing-card:nth-child(14) { animation-delay: 0.7s; }
+  .writing-card:nth-child(15) { animation-delay: 0.75s; }
+
+  @media (max-width: 600px) {
+    .writing-card { padding: 2rem 1.5rem; }
+    .writing-card.quote { padding: 2.5rem 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A collection of writings by</p>
+    <h1 class="hero-title">
+      Misery<span>&amp; Beyond</span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-subtitle">"In the void of nothingness, I lose the fight."</p>
+    <div class="hero-divider"></div>
+    <p class="hero-author">Hashim Malik</p>
+  </div>
+  <div class="scroll-hint">Read</div>
+</header>
+
+<!-- ── WRITINGS ── -->
+<main class="content">
+  <p class="section-label">Poems &amp; Prose</p>
+
+  <div class="writings-grid">
+
+    <!-- 1. Untitled (worst nights) -->
+    <article class="writing-card prose">
+      <div class="card-title">Untitled</div>
+      <div class="prose-body">
+        And I used to think my worst nights were the ones with tears but I was wrong.<br><br>
+        The most dreadful nights are, those when you feel nothing at all. You remain unmoved
+        from the spot, where you've sat for hours on end. No smile breaks through, no comfort to
+        send. Nothing stirs, no change in sight, In the void of nothingness, I lose the fight.
+        I used to feel everything, every sway, Now, in emptiness, I merely stay.
+      </div>
+      <div class="card-attribution">— Hashim Malik</div>
+    </article>
+
+    <!-- 2. Misery – The Key -->
+    <article class="writing-card verse">
+      <div class="card-title">Misery — The Key</div>
+      <div class="poem-body">
+        <div class="stanza">
+          <span class="line">What if the key to all the pain</span>
+          <span class="line">The parts that yearn and remain</span>
+          <span class="line">Lies in doing all the things held back</span>
+          <span class="line">Thinking that the ability is what I lack?</span>
+        </div>
+        <div class="stanza">
+          <span class="line">What if the key to all the pain</span>
+          <span class="line">Is to let go of patterns that I did again</span>
+          <span class="line">Fearing the potential that lay within</span>
+          <span class="line">Dreaming of just what might have been</span>
+        </div>
+        <div class="stanza">
+          <span class="line">What if the key to all the pain</span>
+          <span class="line">Was trying not to do it again?</span>
+          <span class="line">Second guess &amp; criticize every action</span>
+          <span class="line">Rewarding instead of punishing a reaction?</span>
+        </div>
+        <div class="stanza">
+          <span class="line">What if the key to all the pain</span>
+          <span class="line">Lies in learning not to complain</span>
+          <span class="line">To hide, constrain or defend but loving myself as my best friend.</span>
+          <span class="line">So my <strong>MISERY</strong> remain.</span>
+        </div>
+      </div>
+      <div class="card-attribution">— Hashim Reyaz Malik</div>
+    </article>
+
+    <!-- 3. Misery – Guilt Within -->
+    <article class="writing-card verse">
+      <div class="card-title">Misery — Guilt Within</div>
+      <div class="poem-body">
+        <div class="stanza">
+          <span class="line">The guilt you hold within, for me,</span>
+          <span class="line">Because my thoughts linger, you hauntingly.</span>
+          <span class="line">It torments me still, a relentless foe,</span>
+          <span class="line">For I see myself as hideous now, I know.</span>
+        </div>
+        <div class="stanza">
+          <span class="line">The power behind you,</span>
+          <span class="line">Depriving you from the warmth of my heart.</span>
+          <span class="line">No more remonstrance, no complaints I bear,</span>
+          <span class="line">For now, I understand, I am aware.</span>
+        </div>
+        <div class="stanza">
+          <span class="line">In silence, I embrace the guilt, let it be your guide,</span>
+          <span class="line">While I hide my sorrow deep inside.</span>
+        </div>
+        <div class="stanza">
+          <span class="line">Quiesce for wounds unseen,</span>
+          <span class="line">In this quiet torment, I glean.</span>
+        </div>
+        <div class="stanza">
+          <span class="line">I'm misery, unseen unbound</span>
+          <span class="line">None can see me, none around.</span>
+        </div>
+      </div>
+      <div class="card-attribution">— Hashim Malik</div>
+    </article>
+
+    <!-- 4. Seasons (quote-style) -->
+    <article class="writing-card quote">
+      <div class="poem-body" style="color:var(--parchment); text-align:center; font-size:1.3rem; line-height:2;">
+        <span class="line">THERE ARE SEASONS FOR LEARNING</span>
+        <span class="line">THERE ARE MOMENTS FOR FIGHTING</span>
+        <span class="line">THERE ARE CHAPTERS FOR FORGIVING</span>
+        <span class="line" style="margin-top:0.5rem; font-size:1.5rem; color:var(--accent);">But TODAY</span>
+        <span class="line" style="font-size:1.5rem; color:var(--accent); font-family:'Cinzel',serif; letter-spacing:0.08em;">TODAY IS FOR LOVING</span>
+      </div>
+      <div class="card-attribution" style="color:#6b5c40;">— Hashim Malik</div>
+    </article>
+
+    <!-- 5. Misery (the two lies) -->
+    <article class="writing-card quote">
+      <div class="card-title" style="color:var(--accent); justify-content:center; text-align:center;">Misery</div>
+      <div class="quote-body">
+        OUR CULTURE HAS ACCEPTED TWO HUGE LIES.<br><br>
+        THE FIRST IS THAT IF YOU DISAGREE WITH SOMEONE'S LIFESTYLE, YOU MUST FEAR OR HATE THEM.<br><br>
+        THE SECOND IS THAT TO LOVE SOMEONE MEANS YOU AGREE WITH EVERYTHING THEY BELIEVE OR DO.<br>
+        BOTH ARE NONSENSE.<br><br>
+        <strong>YOU DON'T HAVE TO COMPROMISE CONVICTIONS TO BE COMPASSIONATE.</strong>
+      </div>
+      <div class="page-ref" style="color:#6b5c40; margin-top:1.5rem;">Page: 257</div>
+    </article>
+
+    <!-- 6. Self-repair (Misery) -->
+    <article class="writing-card prose">
+      <div class="card-title">Self-repair &nbsp;(Misery)</div>
+      <div class="prose-body">
+        It's funny how one day you look back at your life and you realize that you finally moved on.
+        And it didn't come out of the blue, but one day it clicks in that your infatuation is gone.
+        And you didn't necessarily find anything new. It took a lot of work, but you finally chose you.
+        You finally asked yourself out for a dance. You finally gave healing a chance.
+        How one day you look back at your history and you realize that you finally moved on from the misery.
+      </div>
+      <div class="card-attribution">— Hashim Malik</div>
+    </article>
+
+    <!-- 7. Sound of Silence (noted as saved/inspired) -->
+    <article class="writing-card verse">
+      <div class="card-title">The Sound of Silence</div>
+      <div class="poem-body">
+        <div class="stanza">
+          <span class="line">Hello darkness, my old friend</span>
+          <span class="line">I've come to talk with you again</span>
+          <span class="line">Because a vision softly creeping</span>
+          <span class="line">Left its seeds while I was sleeping</span>
+          <span class="line">And the vision that was planted in my brain</span>
+          <span class="line">Still remains within the sound of silence</span>
+        </div>
+        <div class="stanza">
+          <span class="line">In restless dreams, I walked alone</span>
+          <span class="line">Narrow streets of cobblestone</span>
+          <span class="line">'Neath the halo of a street lamp</span>
+          <span class="line">I turned my collar to the cold and damp</span>
+          <span class="line">When my eyes were stabbed by the flash of a neon light</span>
+          <span class="line">That split the night</span>
+          <span class="line">And touched the sound of silence</span>
+        </div>
+      </div>
+      <div class="card-attribution">— Saved in the collection of Hashim Malik</div>
+    </article>
+
+    <!-- 8 & 12 & 15. Urdu/Hindi verse (Realisation Hits) -->
+    <article class="writing-card urdu">
+      <div class="card-title">Realisation Hits</div>
+      <div class="urdu-body">
+        <span class="line">Ab mood nahin hai</span>
+        <span class="line">Ruk jaane mein sukoon hai</span>
+        <span class="line" style="margin-top:0.8rem;">Kahin aur aage badh jaane mein hi bhalai hai</span>
+        <span class="line">Magar yad karegi kisi roz</span>
+        <span class="line" style="margin-top:0.8rem;">Kisi naye duniya ka kisi aur koone mein</span>
+        <span class="line">Kisi aur kahani ki kisi aur wajud mein</span>
+        <span class="line" style="margin-top:0.8rem;">Fir daub jaenge is kahani ki kisi aur yad mein</span>
+      </div>
+      <div class="card-attribution" style="color:#6b5c40;">— 8 July · Hashim Malik</div>
+    </article>
+
+    <!-- 9. Out beyond (Rumi-inspired) -->
+    <article class="writing-card quote">
+      <div class="quote-body" style="font-size:clamp(1.3rem,4vw,2rem);">
+        Out beyond ideas of wrongdoing and right doing<br>
+        There is a field.<br>
+        <span style="color:var(--accent);">I'll meet you there.</span>
+      </div>
+      <div class="card-attribution" style="color:#6b5c40;">— Saved in the collection of Hashim Malik</div>
+    </article>
+
+    <!-- 10 & 11. RUMI piece (Hashim Malik's handwriting) -->
+    <article class="writing-card verse">
+      <div class="card-title">Rumi &nbsp;— A Personal Transcription</div>
+      <div class="poem-body">
+        <div class="stanza">
+          <span class="line">I choose to love you in <em>silence</em></span>
+          <span class="line">For in <em>silence</em> I find no <em>rejection</em></span>
+        </div>
+        <div class="stanza">
+          <span class="line">I choose to love you in <em>loneliness</em></span>
+          <span class="line">For in <em>loneliness</em> no one owes you but me</span>
+        </div>
+        <div class="stanza">
+          <span class="line">I choose to <em>adore</em> you from a distance</span>
+          <span class="line">From distance will shield me from <em>pain</em></span>
+        </div>
+        <div class="stanza">
+          <span class="line">I choose to <em>kiss</em> you in the wind</span>
+          <span class="line">For the wind is gentler than my <em>lips</em></span>
+        </div>
+        <div class="stanza">
+          <span class="line">I choose you to hold in my <em>dreams</em></span>
+          <span class="line">For in my dreams you have <em>no end</em></span>
+        </div>
+      </div>
+      <div class="card-attribution">— Hashim Malik</div>
+    </article>
+
+    <!-- 13. #26 -->
+    <article class="writing-card prose">
+      <div class="number-badge">26</div>
+      <div class="card-title">26</div>
+      <div class="prose-body">
+        My lungs have not taken a full breath since you left.
+        Because without you, the oxygen has exited the room.
+        And I've held hands too. But my palms still feel empty because none of them feel like you.
+        My mind has become a tape recorder that is stuck on a constant loop.
+        Replying the sound of your laughter. It is like a catchy but sad tune.
+        And I often wonder, if in your mind my voice is playing too.
+        I stare at the ceiling of my room and replay the last time we spoke.
+        When no one else is watching. And I wish it hadn't ended so soon.
+        Tell me — is it easier to breathe now that I've disappeared, or are you suffocating too?
+      </div>
+      <div class="card-attribution">— Hashim Malik</div>
+    </article>
+
+    <!-- 14 & 16. Beyond the Horizon -->
+    <article class="writing-card prose">
+      <div class="card-title">Beyond The Horizon</div>
+      <div class="prose-body">
+        Beyond the sky over the horizon.<br>
+        There is a world, where the rules of lies and Truth don't exist.<br>
+        Where the souls meet beyond bodies.<br>
+        I imagine myself with a simulation of the Perfect you.<br>
+        Let's go there.
+      </div>
+      <div class="card-attribution">— Hashim Malik</div>
+    </article>
+
+    <!-- 17. I'm Paradoxical -->
+    <article class="writing-card prose">
+      <div class="card-title">I'm Paradoxical</div>
+      <div class="prose-body">
+        I like to be happy, but I think about sad things all the time.<br>
+        I don't really like myself, but I love the person I've become.<br>
+        I say I don't care, but I just care too much, deep into my bones.<br>
+        I crave attention, yet I reject everything that comes my way.<br>
+        I heal people, but I broke my own heart trying to fix them.<br>
+        I love to listen, but I never tell them what's inside me.<br><br>
+        <em>Tell me — do you understand my misery?</em>
+      </div>
+      <div class="card-attribution">— Hashim Malik</div>
+    </article>
+
+    <!-- 18 & 19. God and Destiny -->
+    <article class="writing-card quote">
+      <div class="quote-body">
+        Someone asked God.<br>
+        <span style="font-style:italic; color:#c9a84c;">"If everything is already written in destiny then why should I wish?"</span><br><br>
+        God said,<br><br>
+        <em style="font-size:1.3em;">maybe on some pages I've written "as your wish"</em>
+      </div>
+      <div class="card-attribution" style="color:#6b5c40;">— Hashim Malik</div>
+    </article>
+
+    <!-- 20. Why don't I accept my fate -->
+    <article class="writing-card prose">
+      <div class="card-title">Untitled Reflection</div>
+      <div class="prose-body">
+        Why don't I accept my fate, even though I can see it clearly?
+        Yet my heart can't seem to comprehend. Why do I run after something that isn't mine?
+        Why do I keep forgetting that what I wish for has gone down the hill?
+        When I can see clearly that there is no way to go there,
+        why do I keep looking beyond the horizon, where I see nothing but misery?<br><br>
+        I guess it's the intellectual me and the emotional me battling within.
+        But in the end, no matter who wins or loses, the whole of me will always be a loser.
+        I end up feeling like a ne'er-do-well.
+      </div>
+      <div class="card-attribution">— Hashim Malik</div>
+    </article>
+
+  </div>
+</main>
+
+<!-- ── COLOPHON ── -->
+<footer class="colophon">
+  <div class="colophon-content">
+    <div class="colophon-ornament">✦ ✦ ✦</div>
+    <div class="colophon-name">Hashim Malik</div>
+    <div class="colophon-tagline">poet · writer · seeker</div>
+    <div class="colophon-divider"></div>
+    <div class="colophon-rights">© All writings belong to Hashim Malik. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
